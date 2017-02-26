@@ -9,6 +9,10 @@ body{
 	background-color: black
 }
 
+.total{
+	color: white;
+}
+
 .maxText{
 	position: absolute;
 	top: 300;
@@ -21,9 +25,10 @@ body{
 
 </style>
 
-<canvas id="myCanvas" width="1400" height="775"></canvas>
+<h1 class="total" id="total">Total Nonsense: 1</h1>
+<canvas id="myCanvas" width="1400" height="700"></canvas>
 <img id="doge" src="doge.jpeg" alt="Smiley face" height="0" width="0">
-<h1 class="maxText" id="max" hidden>You Reached Maximum Nonsense :)</h1>
+<!-- <h1 class="maxText" id="max" hidden>You Reached Maximum Nonsense :)</h1> -->
 
 <script>
 var context;
@@ -34,17 +39,20 @@ var dx=[5];
 var dy=[5];
 var colors = ["#0000ff", "#ff0000", "#33cc33", "#ffff00", "#ff33cc", "#6600cc"];
 var interval;
+var total;
+var totalNum = 0;
 
 function init()
 {
 	context= myCanvas.getContext('2d');
 	img = document.getElementById("doge");
 	interval = setInterval(draw,10);
+	total = document.getElementById("total");
 }
 
 function draw()
 {
-	context.clearRect(0, 0, 1400, 775);
+	context.clearRect(0, 0, 1400, 700);
 	context.beginPath();
 	
 	for (let i = 0; i < x.length; i++){
@@ -59,7 +67,7 @@ function draw()
 			addNonsense();
 			dx[i]=-dx[i];
 		}
-		if (y[i] > 775 || y[i] < -10){
+		if (y[i] > 700 || y[i] < -10){
 			addNonsense();
 			dy[i]=-dy[i];
 		}
@@ -71,15 +79,17 @@ function draw()
 }
 
 function addNonsense(){
-	if (x.length > 15000){
-		clearInterval(interval);
-		document.getElementById("max").hidden = false;
-	}else{
+	// if (x.length > 15000){
+	// 	clearInterval(interval);
+	// 	document.getElementById("max").hidden = false;
+	// }else{
+		totalNum++;
+		total.innerHTML = "Total Nonsense: " + totalNum;
 		x.push(Math.floor(Math.random()*1400));
 		y.push(Math.floor(Math.random()*700));
 		dx.push(Math.floor(Math.random()*5 + 1));
 		dy.push(Math.floor(Math.random()*5 + 1));
-	}
+	// }
 }
 
 init();
